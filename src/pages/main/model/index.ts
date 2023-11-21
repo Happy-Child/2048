@@ -12,55 +12,55 @@ export const $items = createStore<GridItem[][]>([
       value: 2
     },
     {
-      value: 2**12
+      value: 2**5
     },
     {
-      value: 2**16
+      value: 2**4
+    },
+    {
+      value: 2
+    },
+  ],
+  [
+    {
+      value: null
+    },
+    {
+      value: 2
+    },
+    {
+      value: 2**4
+    },
+    {
+      value: 2
+    },
+  ],
+  [
+    {
+      value: null
     },
     {
       value: null
     },
-  ],
-  [
     {
       value: 2**2
     },
     {
-      value: 2**13
-    },
-    {
-      value: null
-    },
-    {
-      value: null
-    },
-  ],
-  [
-    {
       value: 2**3
     },
-    {
-      value: 2**14
-    },
-    {
-      value: null
-    },
-    {
-      value: null
-    },
   ],
   [
     {
-      value: 2**8
-    },
-    {
       value: null
     },
     {
       value: null
     },
     {
-      value: null
+      value: 2
+    },
+    {
+      value: 2
     },
   ],
 ])
