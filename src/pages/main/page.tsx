@@ -1,13 +1,15 @@
 import styles from './styles.module.scss'
 import cn from 'classnames'
-import {useUnit} from "effector-react";
-import {$items, onDirectionEvent} from "./model";
+import {useGate, useUnit} from "effector-react";
+import {$board, AppGate, onDirectionEvent} from "./model";
 import {GridItem} from "./components";
 import {DirectionByKeyCode, KeyCodes, SkeletonGridItems} from "./constants.ts";
 import {useEffect} from "react";
 
 const Main = () => {
-  const items = useUnit($items)
+  useGate(AppGate)
+
+  const items = useUnit($board)
 
   useEffect(() => {
     const handler = ({ key }: KeyboardEvent) => {

@@ -1,78 +1,35 @@
 import { sample } from 'effector'
-import {$direction, $items, onDirectionEvent} from "./index.ts";
-import {GridItem} from "../types.ts";
-import {cloneDeep, isNull} from "../../../shared/utils.ts";
+import {
+  $board,
+  $direction,
+  AppGate,
+  getRandomBoardFx,
+  onDirectionEvent,
+  runGenerateRandomBoardEvent
+} from "./index.ts";
 import {Direction} from "../constants.ts";
-
-type Board = GridItem[][]
-
-const rotateBoardByY = (board: Board): Board => board.map((row) => row.reverse())
-
-const matrixTranspose = <T extends Array<Array<any>>>(mtrx: T): T => {
-  mtrx = cloneDeep(mtrx)
-
-  const newMtrx = (new Array(mtrx.length).fill(0).map(() => [])) as unknown as T
-
-  mtrx.forEach((row, parentIndex) => {
-    row.forEach((item, index) => {
-      newMtrx[index][parentIndex] = item
-    })
-  })
-
-  return newMtrx
-}
-
-const combineBoardValues = (board: Board): Board => {
-  const newBoard = cloneDeep(board)
-
-  newBoard.forEach((row) => {
-    for (let i = row.length - 1; i > 0; i--) {
-      const curValue = row[i].value
-      const prevValue = row[i - 1].value
-
-      if (isNull(curValue) || isNull(prevValue)) {
-        continue
-      }
-
-      if (curValue === prevValue) {
-        row[i].value = (row[i].value as number) * 2
-        row[i - 1].value = null
-      }
-    }
-  })
-
-  return newBoard
-}
-
-const pushBoardToRight = (board: Board): Board => {
-  const newBoard = cloneDeep(board)
-
-  newBoard.forEach((row) => {
-    let lastIndex = board.length - 1
-
-    for (let i = row.length - 1; i >= 0; i--) {
-      const { value } = row[i]
-
-      if (isNull(value)) {
-        continue
-      }
-
-      if (lastIndex !== i) {
-        row[lastIndex] = { value }
-        row[i] = { value: null }
-      }
-
-      lastIndex--
-    }
-  })
-
-  return newBoard
-}
+import {Board} from "../types.ts";
+import {combineBoardValues, matrixTranspose, pushBoardToRight, rotateBoardByY} from './utils.ts';
 
 sample({
-  source: { items: $items, direction: $direction },
+  clock: AppGate.open,
+  target: runGenerateRandomBoardEvent,
+})
+
+sample({
+  clock: runGenerateRandomBoardEvent,
+  target: getRandomBoardFx,
+})
+
+sample({
+  clock: getRandomBoardFx.doneData,
+  target: $board,
+})
+
+sample({
+  source: { board: $board, direction: $direction },
   clock: onDirectionEvent,
-  fn: ({ items: board, direction }) => {
+  fn: ({ board, direction }) => {
     let newBoard: Board
 
     if (direction === Direction.Right) {
@@ -98,6 +55,6 @@ sample({
 
     return newBoard
   },
-  target: $items,
+  target: $board,
 })
 

@@ -1,11 +1,17 @@
 import {GridItem} from "./types.ts";
 
-export const GridSize = 4
+export const BoardSize = 4
 
 export const MaxColorLevel = 12
 
-export const SkeletonGridItems: GridItem[][] = (new Array(GridSize).fill(0).map(() => {
-  return new Array(GridSize).fill(0).map(() => ({ value: null }))
+export const InitialBoardValue = 2
+
+export const SkeletonGridItems: GridItem[][] = (new Array(BoardSize).fill(0).map(() => {
+  return new Array(BoardSize).fill(0).map(() => ({ value: null }))
+}))
+
+export const EmptyBoard = (new Array(BoardSize).fill(0).map(() => {
+  return new Array(BoardSize).fill(0).map(() => ({ value: null }))
 }))
 
 export enum Direction {

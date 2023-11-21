@@ -1,68 +1,51 @@
-import {createEvent, createStore, restore} from 'effector'
+import {attach, createEvent, createStore, restore} from 'effector'
 import {GridItem} from "../types.ts";
-import {Direction} from "../constants.ts";
+import {BoardSize, Direction, EmptyBoard, InitialBoardValue} from "../constants.ts";
+import {createGate} from "effector-react";
+import {generateRandomBoardPosition} from "./utils.ts";
+import {isEqualObjects} from "../../../shared/utils.ts";
+
+export const AppGate = createGate('AppGate')
+
+export const runGenerateRandomBoardEvent = createEvent('runGenerateRandomBoardEvent')
 
 export const onDirectionEvent = createEvent<Direction>('onDirectionEvent')
 
 export const $direction = restore(onDirectionEvent, Direction.Left)
 
-export const $items = createStore<GridItem[][]>([
-  [
-    {
-      value: 2
-    },
-    {
-      value: 2**5
-    },
-    {
-      value: 2**4
-    },
-    {
-      value: 2
-    },
-  ],
-  [
-    {
-      value: null
-    },
-    {
-      value: 2
-    },
-    {
-      value: 2**4
-    },
-    {
-      value: 2
-    },
-  ],
-  [
-    {
-      value: null
-    },
-    {
-      value: null
-    },
-    {
-      value: 2**2
-    },
-    {
-      value: 2**3
-    },
-  ],
-  [
-    {
-      value: null
-    },
-    {
-      value: null
-    },
-    {
-      value: 2
-    },
-    {
-      value: 2
-    },
-  ],
-])
+export const $board = createStore<GridItem[][]>(EmptyBoard).reset(AppGate.close)
 
+export const getRandomBoardFx = attach({
+  effect: (board) => {
+    const getStartItems = (): { row: number, col:  number }[] => {
+      const first = generateRandomBoardPosition(BoardSize)
+      const second = generateRandomBoardPosition(BoardSize)
 
+      if (isEqualObjects(first, second)) {
+        return getStartItems()
+      }
+
+      return [first, second]
+    }
+
+    const [first, second] = getStartItems()
+
+    return board.map((row, rowIndex) => {
+      if (![first.row, second.row].includes(rowIndex)) {
+        return row
+      }
+
+      return row.map((col, colIndex) => {
+        const matchWithFirst = first.row === rowIndex && first.col === colIndex
+        const matchWithSecond = second.row === rowIndex && second.col === colIndex
+
+        if (matchWithFirst || matchWithSecond) {
+          return { value: InitialBoardValue }
+        }
+
+        return col
+      })
+    })
+  },
+  source: $board,
+})
