@@ -1,0 +1,12 @@
+@import './variables';
+
+* {
+  font-family: $default-font-family, sans-serif;
+}
+
+body {
+  font-size: $default-font-size;
+  line-height: $default-line-height;
+  color: $black;
+  overflow-x: hidden;
+}

@@ -1,0 +1,27 @@
+@import '../variables';
+@import './media';
+
+@mixin gridContainer {
+  width: 100%;
+  max-width: map-get($breakpoints, xlMax);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $grid-gap;
+  padding-right: $grid-gap;
+
+  @include mqDown(xlMax) {
+    max-width: map-get($breakpoints, lgMax) - $grid-gap * 2;
+  }
+
+  @include mqDown(lgMax) {
+    max-width: map-get($breakpoints, mdMax) - $grid-gap * 2;
+  }
+
+  @include mqDown(mdMax) {
+    max-width: map-get($breakpoints, smMax) - $grid-gap * 2;
+  }
+
+  @include mqDown(smMax) {
+    max-width: none;
+  }
+}

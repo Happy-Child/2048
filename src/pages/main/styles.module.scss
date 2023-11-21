@@ -1,0 +1,98 @@
+@import "@shared/styles";
+
+body {
+  min-height: 400px;
+  height: 100vh;
+  background-color: $appBg;
+}
+
+.root {
+  padding: 60px $getter;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.content {
+  width: 100%;
+  max-width: calc(800px + $getter);
+}
+
+
+
+
+.board {
+  background-color: $boardBg;
+  position: relative;
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: $borderRadius;
+  padding: $gridGap;
+  aspect-ratio: 1;
+}
+
+
+
+.grid {
+  aspect-ratio: 1;
+  width: calc(100% - $gridGap * 2);
+  position: absolute;
+}
+
+.gridSkeleton {
+  pointer-events: none;
+}
+
+// Grid items
+.gridItemPosition {
+  transition: transform 0.3s linear;
+
+  @for $row from 1 to ($gridSize + 1) {
+    @for $col from 1 to ($gridSize + 1) {
+      &#{$row}#{$col} {
+        $distance: calc(100% + $gridGap);
+
+        transform: translate(calc(($col - 1) * $distance), calc(($row - 1) * $distance));
+      }
+    }
+  }
+}
+
+.gridItem {
+  border-radius: $borderRadius;
+  aspect-ratio: 1;
+  width: calc(25% - $gridGap * 0.75);
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gridItemSkeleton {
+  background-color: $gridItemSkeletonBg;
+}
+
+.gridItemColor {
+  @for $i from 1 through length($gridItemColors) {
+    $currentColor: map-get($gridItemColors, $i);
+
+    &#{$i} {
+      background-color: $currentColor;
+
+      @if $i == 1 {
+        .gridItemValue {
+          color: #776e65;
+        }
+      }
+    }
+  }
+}
+
+.gridItemValue {
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  font-size: 35px;
+}
+

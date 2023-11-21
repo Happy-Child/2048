@@ -1,0 +1,11 @@
+@mixin svgColor($color) {
+  path[fill], circle[fill] {
+    fill: $color;
+  }
+
+  path[stroke], circle[stroke] {
+    stroke: $color;
+  }
+}
+
+

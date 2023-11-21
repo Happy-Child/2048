@@ -1,0 +1,72 @@
+// Colors (color by hex https://chir.ag/projects/name-that-color)
+$governor-bay: #2F2FBD;
+$jacksons-purple: #1F1F88;
+$blue: #4D4DFF;
+$malibu: #8CA5FF;
+
+$linen: #F8DBD5;
+$vivid-tangerine: #FF8B8B;
+$pomegranate: #F74825;
+
+$amber: #FFBF00;
+
+$eucalyptus: #29B24A;
+
+$alabaster: #F8F8F8;
+$athens-gray: #EFF0F2;
+$mercury: #E6E6E6;
+$silver: #CCC;
+$dusty-gray: #999;
+$gallery: #F0F0F0;
+$white: #FFF;
+
+$black: #000;
+$mine-shaft: #3E3E3E;
+
+// Fonts
+$default-font-size: 16px;
+$default-line-height: 1.2;
+$default-font-family: 'Montserrat';
+
+// Transitions
+$default-transition-color: 200ms ease;
+
+// Screen breakpoints
+$breakpoints: (
+  smMax: 480px,
+  mdMax: 768px,
+  lgMax: 1024px,
+  xlMax: 1200px,
+);
+
+// Grid
+$grid-gap: 20px;
+
+// -----------------
+
+// App
+$getter: 16px;
+$appBg: #faf8ef;
+
+// Board
+$boardBg: #bbada0;
+$borderRadius: 6px;
+$gridGap: 16px;
+
+// Grid
+$gridItemSkeletonBg: rgba(238, 228, 218, 0.35);
+$gridSize: 4;
+$gridItemColors: (
+        1: #EEDFC8,
+        2: #F3B079,
+        3: #F59563,
+        4: #F87C60,
+        5: #F65D3D,
+        6: #EDCE73,
+        7: #ECCA5F,
+        8: #EDC64F,
+        9: #EDC541,
+        10: #EFC231,
+        11: #FF3E3F,
+        12: #FF1F1F
+);

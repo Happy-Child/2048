@@ -1,0 +1,53 @@
+@import "@shared/styles";
+
+.gridItemPosition {
+  transition: 1s all ease;
+
+  @for $row from 1 to ($gridSize + 1) {
+    @for $col from 1 to ($gridSize + 1) {
+      &#{$row}#{$col} {
+        $distance: calc(100% + $gridGap);
+
+        transform: translate(calc(($col - 1) * $distance), calc(($row - 1) * $distance));
+      }
+    }
+  }
+}
+
+.gridItem {
+  border-radius: $borderRadius;
+  aspect-ratio: 1;
+  width: calc(25% - $gridGap * 0.75);
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gridItemSkeleton {
+  background-color: $gridItemSkeletonBg;
+}
+
+.gridItemColor {
+  @for $i from 1 through length($gridItemColors) {
+    $currentColor: map-get($gridItemColors, $i);
+
+    &#{$i} {
+      background-color: $currentColor;
+
+      @if $i == 1 {
+        .gridItemValue {
+          color: #776e65;
+        }
+      }
+    }
+  }
+}
+
+.gridItemValue {
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  font-size: 35px;
+}
+
